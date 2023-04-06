@@ -1,6 +1,6 @@
 const util = require('util');
 const core = require('@actions/core');
-const github = require('@actions/github');
+const { GitHub, context } = require('@actions/github');
 const axios = require('axios');
 
 const supportedEvent = 'pull_request';
@@ -14,7 +14,7 @@ const shouldAddPrComment = core.getInput('add-pr-comment') === 'true';
 //token is NOT magically present in context as some docs seem to indicate - have to supply in workflow yaml to input var
 const ghToken = core.getInput('repo-token');
 
-const evthookPayload = github.context.payload;
+const evthookPayload = context.payload;
 
 const trelloClient = axios.create({
   baseURL: 'https://api.trello.com',
@@ -60,7 +60,7 @@ const getCardInfoSubset = async (cardId) => {
 };
 
 
-const octokit = new github.GitHub(ghToken);
+const octokit = new GitHub(ghToken);
 
 const baseIssuesArgs = {
     owner: (evthookPayload.organization || evthookPayload.repository.owner).login,
@@ -124,9 +124,9 @@ const buildTrelloLinkComment = async (cardId) => {
 
 (async () => {
   try {
-    if(!(github.context.eventName === supportedEvent && supportedActions.some(el => el === evthookPayload.action))) {
-       core.info(`event/type not supported: ${github.context.eventName.eventName}.${evthookPayload.action}.  skipping action.`);
-       return;
+    if (!(context.eventName === supportedEvent && supportedActions.some(el => el === evthookPayload.action))) {
+      core.info(`event/type not supported: ${context.eventName}.${evthookPayload.action}.  skipping action.`);
+      return;
     }
     
     const prUrl = evthookPayload.pull_request.html_url;
