@@ -2,7 +2,7 @@
   "name": "attach-to-trello-card-action",
   "version": "2.0.0",
   "description": "Github Action: Add attachment to a given Trello card URL (e.g., pull request)",
-  "main": "attach_to_trello-card-action/index.js",
+  "main": "attach-pr-to-trello-card-action/index.js",
   "scripts": {
     "lint": " ./node_modules/eslint/bin/eslint.js . --ext .js"
   },
