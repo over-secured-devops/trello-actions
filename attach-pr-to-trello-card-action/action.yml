@@ -1,4 +1,4 @@
-name: 'Attach to Trello Card'
+name: 'Attach PR to Trello Card'
 description: 'Add attachment to a given Trello card URL, to Attach Pull Request'
 inputs:
   trello-key:
@@ -11,5 +11,5 @@ runs:
   using: 'node16'
   main: 'index.js'
 branding:
-  icon: 'paperclip'
+  icon: 'paperclip'  
   color: 'blue'
